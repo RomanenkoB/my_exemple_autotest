@@ -1,0 +1,2 @@
+# vending auto tests
+
