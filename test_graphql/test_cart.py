@@ -29,7 +29,7 @@ upsertCartItem = '''mutation {
     quantity,
     item{id, name, category, type, feelings, imageUrls{photo1}, status},
     machineItem{id, quantity, availableQuantity, machine{id, type, workingHours, status, imageUrls{photo1}}},
-    favoriteItem{id}
+  	favoriteItem{item{id, name, category, type, feelings, status, imageUrls{photo1}}}
   }
 }'''
 
@@ -38,7 +38,7 @@ removeCartItem = '''mutation{
 }'''
 
 emptyCart = '''mutation{
-  emptyCart(input: {machineId: %s})
+  emptyCart(input: {machineId: "%s"})
 }'''
 
 
