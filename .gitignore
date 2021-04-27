@@ -1,6 +1,6 @@
-test_graphql/reports
-test_graphql/venv
 test_graphql/main.py
 test_selenium/venv
 test_selenium/main.py
 /venv
+.idea
+test_graphql/reports/*.xlsx

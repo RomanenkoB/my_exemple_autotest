@@ -43,14 +43,6 @@ machines = '''query{
   }
 }'''
 
-upsertFavoriteItem = '''mutation{
-  upsertFavoriteItem(input: {machineId: "%s", itemId: "%s"})
-}'''
-
-removeFavoriteItem = '''mutation{
-  removeFavoriteItem(input: {machineId: "%s", itemId: "%s"})
-}'''
-
 
 def test_machinesAll():
     global machineId
@@ -109,26 +101,4 @@ def test_machineItem():
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", machineItem % (machineId, itemId))
     except:
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", machineItem % (machineId, itemId))
-        assert False
-
-
-def test_upsertFavoriteItem():
-    start_time = time.time()
-    r = requests.post(url, json={'query': upsertFavoriteItem % (machineId, itemId)}, headers=headers)
-    try:
-        assert r.json()["data"]
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", upsertFavoriteItem % (machineId, itemId))
-    except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", upsertFavoriteItem % (machineId, itemId))
-        assert False
-
-
-def test_removeFavoriteItem():
-    start_time = time.time()
-    r = requests.post(url, json={'query': upsertFavoriteItem % (machineId, itemId)}, headers=headers)
-    try:
-        assert r.json()["data"]["removeFavoriteItem"]
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", upsertFavoriteItem % (machineId, itemId))
-    except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", upsertFavoriteItem % (machineId, itemId))
         assert False
