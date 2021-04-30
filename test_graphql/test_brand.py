@@ -28,7 +28,7 @@ def test_brands():
         assert r.json()["data"]
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", brands)
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", brands)
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], brands)
         assert False
 
 
@@ -39,7 +39,7 @@ def test_brands_filter():
         assert r.json()["data"]
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", brands_filter)
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", brands_filter)
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], brands_filter)
         assert False
 
 

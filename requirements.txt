@@ -1,6 +1,6 @@
-selenium
-pandas
-pytest
-requests
-openpyxl
-
+selenium==3.141.0
+pandas==1.2.4
+pytest==6.2.3
+requests==2.25.1
+openpyxl==3.0.7
+XlsxWriter==1.4.0
