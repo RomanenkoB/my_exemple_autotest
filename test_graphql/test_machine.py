@@ -24,7 +24,7 @@ machine = '''query {
 }'''
 
 machineItems = '''query{
-  machineItems(filters:{machineId: "%s", retailerId: 1} , first: 15){
+  machineItems(filters:{machineId: "%s", retailerId: 1, isMachine: false} , first: 15){
     paginatorInfo{count,hasMorePages, currentPage, firstItem, lastPage,perPage, total}
     data{id, item{id, name}, quantity, availableQuantity, machine{id, type, workingHours, status, imageUrls{photo1}}},
   }
@@ -53,7 +53,7 @@ def test_machinesAll():
         machineId = random.randint(2, len((r.json()["data"]["machinesAll"])))
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", machinesAll)
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", machinesAll)
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], machinesAll)
         assert False
 
 
@@ -64,7 +64,7 @@ def test_machines():
         assert r.json()["data"]["machines"]
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", machines)
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", machines)
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], machines)
         assert False
 
 
@@ -75,7 +75,7 @@ def test_machine():
         assert r.json()["data"]["machine"]
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", machine % machineId)
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", machine % machineId)
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], machine % machineId)
         assert False
 
 
@@ -89,7 +89,7 @@ def test_machineItems():
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", machineItems % machineId)
         machineId = r.json()["data"]["machineItems"]["data"][0]['machine']["id"]
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", machineItems % machineId)
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], machineItems % machineId)
         assert False
 
 
@@ -100,5 +100,5 @@ def test_machineItem():
         assert r.json()["data"]["machineItem"]
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", machineItem % (machineId, itemId))
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", machineItem % (machineId, itemId))
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], machineItem % (machineId, itemId))
         assert False

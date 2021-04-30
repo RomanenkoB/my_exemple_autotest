@@ -51,7 +51,7 @@ def test_saleOrders():
         assert r.json()["data"]["saleOrders"]
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", saleOrders)
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", saleOrders)
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], saleOrders)
         assert False
 
 
@@ -62,7 +62,7 @@ def test_saleOrder():
         assert r.json()["data"]
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", saleOrder)
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", saleOrder)
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], saleOrder)
         assert False
 
 
@@ -75,7 +75,7 @@ def test_createPreOrder():
         preorderId = r.json()["data"]["createPreOrder"]["id"]
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", createPreOrder % (machineId, itemId))
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", createPreOrder % (machineId, itemId))
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], createPreOrder % (machineId, itemId))
         assert False
 
 
@@ -86,5 +86,5 @@ def test_cancelPreOrder():
         assert r.json()["data"]["cancelPreOrder"]["status"] == "CANCELED"
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", cancelPreOrder % preorderId)
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", cancelPreOrder % preorderId)
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], cancelPreOrder % preorderId)
         assert False

@@ -46,6 +46,20 @@ def add_report_exel():
         headers_exel[6]: Body,
     })
     now = datetime.strftime(datetime.now(), "%Y.%m.%d_%H:%M")
-    df.to_excel("test_graphql/reports/report_" + now + ".xlsx")
+    writer = pd.ExcelWriter("test_graphql/reports/report_" + now + ".xlsx", engine='xlsxwriter')
+    df.to_excel(writer, index=False, sheet_name='report')
+    setting_worksheet(writer)
     return True
 
+
+def setting_worksheet(writer):
+    worksheet = writer.sheets['report']
+    worksheet.set_zoom(90)
+    worksheet.set_column('A:A', 14)
+    worksheet.set_column('B:B', 30)
+    worksheet.set_column('D:D', 30)
+    worksheet.set_column('E:F', 16)
+    worksheet.set_column('G:G', 40)
+    for i in range(1, len(Name_test) + 1):
+        worksheet.set_row(i, 90)
+    writer.save()

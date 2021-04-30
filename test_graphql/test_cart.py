@@ -49,7 +49,7 @@ def test_upsertCartItem():
         assert r.json()["data"]["upsertCartItem"]
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", upsertCartItem % (machineId, itemId))
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", upsertCartItem % (machineId, itemId))
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], upsertCartItem % (machineId, itemId))
         assert False
 
 
@@ -60,7 +60,7 @@ def test_carts():
         assert r.json()["data"]["carts"]
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", carts)
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", carts)
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], carts)
         assert False
 
 
@@ -71,7 +71,7 @@ def test_cart():
         assert r.json()["data"]["cart"]
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", cart % machineId)
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", cart % machineId)
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], cart % machineId)
         assert False
 
 
@@ -82,7 +82,7 @@ def test_removeCartItem():
         assert r.json()["data"]["removeCartItem"]
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", removeCartItem % (machineId, itemId))
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", removeCartItem % (machineId, itemId))
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], removeCartItem % (machineId, itemId))
         assert False
 
 
@@ -94,6 +94,6 @@ def test_emptyCart():
         assert r.json()["data"]["emptyCart"]
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", emptyCart % machineId)
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", emptyCart % machineId)
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], emptyCart % machineId)
         assert False
 

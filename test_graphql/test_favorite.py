@@ -30,7 +30,7 @@ def test_upsertFavoriteItem():
         assert r.json()["data"]
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", upsertFavoriteItem % (machineId, itemId))
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", upsertFavoriteItem % (machineId, itemId))
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], upsertFavoriteItem % (machineId, itemId))
         assert False
 
 
@@ -41,7 +41,7 @@ def test_favorite():
         assert r.json()["data"]["favoriteItems"]
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", favoriteItems)
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", favoriteItems)
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], favoriteItems)
         assert False
 
 
@@ -52,5 +52,5 @@ def test_removeFavoriteItem():
         assert r.json()["data"]["removeFavoriteItem"]
         report_exel(r, start_time, traceback.extract_stack()[-1][2], "SUCCESSFUL", removeFavoriteItem % (machineId, itemId))
     except:
-        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL", removeFavoriteItem % (machineId, itemId))
+        report_exel(r, start_time, traceback.extract_stack()[-1][2], "FAIL - " + r.json()["errors"][0]["extensions"]["category"] + "\n" + r.json()["errors"][0]["message"], removeFavoriteItem % (machineId, itemId))
         assert False
